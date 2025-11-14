@@ -1,15 +1,12 @@
 from pathlib import Path
 import os
-import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "fallback-secret-key")
 DEBUG = False
-ALLOWED_HOSTS = ["your-app.onrender.com"]
+ALLOWED_HOSTS = ["*"]
 
-# Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -49,12 +46,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-# Database (Postgres recommended)
 DATABASES = {
-    "default": dj_database_url.config(default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
 }
 
-# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
@@ -64,16 +62,13 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-# Internationalization
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "Asia/Tashkent"
 USE_I18N = True
 USE_TZ = True
 
-# Static files
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
